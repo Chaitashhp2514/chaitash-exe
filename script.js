@@ -64,16 +64,49 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* Contact form (frontend-only) */
 const form = document.getElementById('contactForm');
-form?.addEventListener('submit', (e) => {
+const statusMessage = document.getElementById('formStatus');
+const submitBtn = form.querySelector('button[type="submit"]');
+
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
-  const status = document.getElementById('formStatus');
-  const data = Object.fromEntries(new FormData(form));
-  if (!data.name || !data.email || !data.message) {
-    status.textContent = 'Please fill all fields.'; status.style.color = 'salmon'; return;
+  
+  // Update UI to show loading state
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Transmitting...';
+  statusMessage.textContent = '';
+
+  const formData = new FormData(form);
+  const object = Object.fromEntries(formData);
+  const json = JSON.stringify(object);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      statusMessage.style.color = '#39FF14'; // Neon green success or match your design
+      statusMessage.textContent = 'Message sent successfully! I’ll get back to you soon.';
+      form.reset();
+    } else {
+      statusMessage.style.color = '#ff4a4a';
+      statusMessage.textContent = result.message || 'Something went wrong.';
+    }
+  } catch (error) {
+    statusMessage.style.color = '#ff4a4a';
+    statusMessage.textContent = 'Network error. Please try again later.';
+  } finally {
+    // Reset button state
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Transmit';
   }
-  status.textContent = '✓ Message ready — opening your email client…';
-  status.style.color = '#4ade80';
-  window.location.href = `mailto:chaitash.work@gmail.com?subject=Portfolio inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message + '\n\n— ' + data.name + ' (' + data.email + ')')}`;
   form.reset();
 
 });

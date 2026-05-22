@@ -63,7 +63,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* Contact form (frontend-only) */
-/* const form = document.getElementById('contactForm');
+const form = document.getElementById('contactForm');
 form?.addEventListener('submit', (e) => {
   e.preventDefault();
   const status = document.getElementById('formStatus');
@@ -74,6 +74,6 @@ form?.addEventListener('submit', (e) => {
   status.textContent = '✓ Message ready — opening your email client…';
   status.style.color = '#4ade80';
   window.location.href = `mailto:chaitash.work@gmail.com?subject=Portfolio inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message + '\n\n— ' + data.name + ' (' + data.email + ')')}`;
-  form.reset();*/
+  form.reset();
 
 });

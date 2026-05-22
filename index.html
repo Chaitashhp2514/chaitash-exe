@@ -163,14 +163,17 @@
           </div>
         </div>
       </div>
-      <form class="contact-form reveal" id="contactForm">
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <textarea name="message" rows="5" placeholder="Message" required></textarea>
-        <p class="muted small">● response time ~ 24–48h</p>
-        <button type="submit" class="btn btn-primary">Transmit</button>
-        <p id="formStatus" class="form-status"></p>
-      </form>
+      <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+  <!-- Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value="d9f0d141-ee59-433a-a069-7f4106245b05">
+
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <textarea name="message" rows="5" placeholder="Message" required></textarea>
+  <p class="muted small">● response time ~ 24–48h</p>
+  <button type="submit" class="btn btn-primary">Transmit</button>
+  <p id="formStatus" class="form-status"></p>
+</form>
     </div>
   </section>
 
